@@ -1,0 +1,915 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+
+#Load the data set
+#Load the data set
+
+
+head(resettlement)
+
+
+
+sum(resettlement$Value, na.rm = TRUE)
+
+unique(resettlement$`Country / territory of asylum/residence`)
+
+unique(resettlement$Origin)
+
+sum(resettlement$Value[resettlement$Origin=="Afghanistan"])
+sum(resettlement$Value[resettlement$Origin=="China"])
+sum(resettlement$Value[resettlement$Origin=="Angola"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Andorra"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Albania"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Algeria"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Argentina"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Dem. Rep. of the Congo"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Iraq"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Iran (Islamic Rep. of)"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Myanmar"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Pakistan"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Palestinian"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Somalia"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Sri Lanka"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Stateless"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Sudan"], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Syrian Arab Rep."], na.rm=TRUE)
+sum(resettlement$Value[resettlement$Origin=="Uganda"], na.rm=TRUE)
+
+table(resettlement$Region.Origin)
+
+table(resettlement$Region.Resettle)
+```
+```{r creating a factor variable for democracies }
+##creating a factor variable for democracies 
+
+resettlement$democracy <- ifelse(resettlement$`Country / territory of asylum/residence` %in% c("Norway", "Iceland", "Sweden", "New Zealand", "Finland", "Ireland", "Denmark", "Canada", "Australia", "Switzerland", "Netherlands", "Luxembourg", "Germany", "United Kingdom of Great Britain and Northern Ireland", "Uruguay", "Austria", "Spain", "Costa Rica", "France", "Chile", "Portugal", "South Korea", "Japan", "United States of America", "Malta", "Estonia", "Israel", "Botswana", "Cape Verde", "Taiwan", "Czech Rep.", "Belgium", "Cyprus", "Italy", "Slovania", "Lithuania", "Latvia", "Greece", "South Africa", "Timor-Leste", "Slovakia", "Malaysia", "Trinidad and Tobago", "Columbia", "Panama", "Bulgaria", "Argentina"), 1, 0)
+
+
+
+
+
+
+
+```
+
+```{r Creating Factor Variables for Region of Origin}
+
+##Creating Factor Variables for Region of Origin
+
+
+resettlement$Region.Origin <- NA
+
+
+resettlement$Region.Origin[resettlement$Origin == "Algeria" | resettlement$Origin == "Angola" | resettlement$Origin == "Benin"| resettlement$Origin == "Botswana" | resettlement$Origin == "Burkina Faso" | resettlement$Origin == "Burundi" | resettlement$Origin == "Cameroon" | resettlement$Origin == "Central African Rep." | resettlement$Origin == "Chad" | resettlement$Origin == "Côte d'Ivoire" | resettlement$Origin == "Comoros" | resettlement$Origin == "Congo" | resettlement$Origin == "Djibouti" | resettlement$Origin == "Equatorial Guinea" | resettlement$Origin== "Eritrea" | resettlement$Origin== "Ethiopia" | resettlement$Origin== "Gabon" | resettlement$Origin== "Gambia" | resettlement$Origin== "Ghana" | resettlement$Origin== "Guinea" | resettlement$Origin== "Guinea-Bissau" | resettlement$Origin== "Kenya" | resettlement$Origin== "Lesotho" | resettlement$Origin== "Liberia" | resettlement$Origin== "Libya" | resettlement$Origin== "Madagascar" | resettlement$Origin== "Malawi" | resettlement$Origin== "Mali" | resettlement$Origin== "Mauritania" | resettlement$Origin== "Mauritius" | resettlement$Origin== "Morocco" | resettlement$Origin== "Mozambique" | resettlement$Origin== "Namibia" | resettlement$Origin== "Niger" | resettlement$Origin== "Nigeria" | resettlement$Origin== "Rwanda" | resettlement$Origin== "Sao Tome and Principe" | resettlement$Origin== "Senegal" | resettlement$Origin== "Seychelles" | resettlement$Origin== "Sierra Leone" | resettlement$Origin== "Somalia" | resettlement$Origin== "South Africa" | resettlement$Origin== "South Sudan" | resettlement$Origin== "Sudan" | resettlement$Origin== "United Rep. of Tanzania" | resettlement$Origin== "Togo" | resettlement$Origin== "Tunisia" | resettlement$Origin== "Uganda" | resettlement$Origin== "Zambia" | resettlement$Origin== "Zimbabwe" | resettlement$Origin == "Swaziland" | resettlement$Origin == "Cabo Verde"]<-"Africa.Region"
+
+
+
+resettlement$Region.Origin[resettlement$Origin == "Afghanistan" | resettlement$Origin == "Bahrain" | resettlement$Origin == "Iran (Islamic Rep. of)" | resettlement$Origin == "Iraq" | resettlement$Origin == "Israel" | resettlement$Origin == "Israel" | resettlement$Origin == "Jordan" | resettlement$Origin == "Kuwait" | resettlement$Origin == "Lebanon" | resettlement$Origin == "Oman" | resettlement$Origin == "Palestinian" | resettlement$Origin == "Qatar" | resettlement$Origin == "Saudi Arabia" | resettlement$Origin == "Syrian Arab Rep." | resettlement$Origin == "Turkey" | resettlement$Origin == "United Arab Emirates" | resettlement$Origin == "Yemen" | resettlement$Origin == "Egypt"] <- "Mid.East.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Argentina" | resettlement$Origin == "Belize" | resettlement$Origin == "Bolivia (Plurinational State of)" | resettlement$Origin == "Brazil" | resettlement$Origin == "Chile" | resettlement$Origin == "Colombia" | resettlement$Origin == "Costa Rica" | resettlement$Origin == "Cuba" | resettlement$Origin == "Dominican Republic" | resettlement$Origin == "Ecuador" | resettlement$Origin == "El Salvador" | resettlement$Origin == "Guatamala" | resettlement$Origin == "Guyana" | resettlement$Origin == "Haiti" | resettlement$Origin == "Honduras" | resettlement$Origin == " Jamaica" | resettlement$Origin == "Mexico" | resettlement$Origin == "Nicaragua" | resettlement$Origin == "Panama" | resettlement$Origin == "Peru" | resettlement$Origin == "Venezuela (Bolivarian Republic of)" | resettlement$Origin == "Uruguay" | resettlement$Origin == "Trinidad and Tobago" | resettlement$Origin == "Suriname" | resettlement$Origin == "Saint Vincent and the Grenadines" | resettlement$Origin == "Saint Lucia" | resettlement$Origin == "Saint Kitts and Nevis" | resettlement$Origin == "Paraguay" | resettlement$Origin == "Barbados" | resettlement$Origin == "Bermuda" | resettlement$Origin == "Bahamas"]<-"Latin.America.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Andorra" | resettlement$Origin == "Austria" | resettlement$Origin == "Belgium" | resettlement$Origin == "Denmark" | resettlement$Origin == "Finland" | resettlement$Origin == "France" | resettlement$Origin == "Germany" | resettlement$Origin == "Iceland" | resettlement$Origin == "Malta" | resettlement$Origin == "Netherlands" | resettlement$Origin == "Norway" | resettlement$Origin == "Portugal" | resettlement$Origin == "Spain" | resettlement$Origin == "Sweden" | resettlement$Origin == "Switzerland" | resettlement$Origin == "United Kingdom of Great Britain and Northern Ireland" | resettlement$Origin == "Ireland"]<-"Western.Europe.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Albania" | resettlement$Origin == "Armenia" | resettlement$Origin == "Azerbaijan" | resettlement$Origin == "Belarus" | resettlement$Origin == "Bosnia and Herzegovina" | resettlement$Origin == "Bulgaria" | resettlement$Origin == "Croatia" | resettlement$Origin == "Cyprus" | resettlement$Origin == "Czech Rep." | resettlement$Origin == "Estonia" | resettlement$Origin == "Georgia" | resettlement$Origin == "Greece" | resettlement$Origin == "Hungary" | resettlement$Origin == "Kazakhstan" | resettlement$Origin == "Kyrgyzstan" | resettlement$Origin == "Latvia" | resettlement$Origin == "Lithuania" | resettlement$Origin == "Montenegro" | resettlement$Origin == "Poland" | resettlement$Origin == "Rep. of Moldova" | resettlement$Origin == "Romania" | resettlement$Origin == "Russian Federation" | resettlement$Origin == "Serbia and Kosovo: S/RES/1244 (1999)" | resettlement$Origin == "Slovakia" | resettlement$Origin == "Slovenia" | resettlement$Origin == "Tajikistan" | resettlement$Origin == "The former Yugoslav Rep. of Macedonia" | resettlement$Origin == "Turkmenistan" | resettlement$Origin == "Ukraine" | resettlement$Origin == "Uzbekistan"]<-"Eastern.Europe.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Australia" | resettlement$Origin == "Brunei Darussalam" | resettlement$Origin == "Cambodia" | resettlement$Origin == "Fiji" | resettlement$Origin == "French Polynesia" | resettlement$Origin == "Indonesia" | resettlement$Origin == "Lao People's Dem. Rep." | resettlement$Origin == "Malaysia" | resettlement$Origin == "Myanmar" | resettlement$Origin == "Papua New Guinea" | resettlement$Origin == "Philippines" | resettlement$Origin == "Samoa" | resettlement$Origin == "Singapore" | resettlement$Origin == "Solomon Islands" | resettlement$Origin == "Thailand" | resettlement$Origin == "Timor-Leste" | resettlement$Origin == "Tonga" | resettlement$Origin == "Tuvalu" | resettlement$Origin == "Viet Nam" | resettlement$Origin == "New Zealand"]<-"Southeast.Asia.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Tibetan" | resettlement$Origin == "Sri Lanka" | resettlement$Origin == "Pakistan" | resettlement$Origin == "Nepal" | resettlement$Origin == "Maldives" | resettlement$Origin == "India" | resettlement$Origin == "Bhutan" | resettlement$Origin == "Bangladesh"] <- "Indian.Subcontinent.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Canada" | resettlement$Origin == "United States of America"]<- "North.America.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "China" | resettlement$Origin == "Rep. of Korea" | resettlement$Origin == "Mongolia" | resettlement$Origin == "Japan" | resettlement$Origin == "Dem. People's Rep. of Korea" | resettlement$Origin == "China, Hong Kong SAR"]<-"Asia.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Stateless"]<-"Stateless.Region"
+
+resettlement$Region.Origin[resettlement$Origin == "Various/unknown"]<-"Unknown.Region"
+
+resettlement$Region.Origin<- as.factor(resettlement$Region.Origin)
+
+
+table(resettlement$Region.Origin)
+
+
+```
+
+```{r Creating Factor Variables for Region of Ressetlement}
+
+##Creating Factor Variables for Region of Ressetlement
+
+resettlement$Region.Resettle <- NA
+
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Algeria" | resettlement$`Country / territory of asylum/residence` == "Angola" | resettlement$`Country / territory of asylum/residence` == "Benin"| resettlement$`Country / territory of asylum/residence` == "Botswana" | resettlement$`Country / territory of asylum/residence` == "Burkina Faso" | resettlement$`Country / territory of asylum/residence` == "Burundi" | resettlement$`Country / territory of asylum/residence` == "Cameroon" | resettlement$`Country / territory of asylum/residence` == "Central African Rep." | resettlement$`Country / territory of asylum/residence` == "Chad" | resettlement$`Country / territory of asylum/residence` == "Côte d'Ivoire" | resettlement$`Country / territory of asylum/residence` == "Comoros" | resettlement$`Country / territory of asylum/residence` == "Congo" | resettlement$`Country / territory of asylum/residence` == "Djibouti" | resettlement$`Country / territory of asylum/residence` == "Equatorial Guinea" | resettlement$`Country / territory of asylum/residence`== "Eritrea" | resettlement$`Country / territory of asylum/residence`== "Ethiopia" | resettlement$`Country / territory of asylum/residence`== "Gabon" | resettlement$`Country / territory of asylum/residence`== "Gambia" | resettlement$`Country / territory of asylum/residence`== "Ghana" | resettlement$`Country / territory of asylum/residence`== "Guinea" | resettlement$`Country / territory of asylum/residence`== "Guinea-Bissau" | resettlement$`Country / territory of asylum/residence`== "Kenya" | resettlement$`Country / territory of asylum/residence`== "Lesotho" | resettlement$`Country / territory of asylum/residence`== "Liberia" | resettlement$`Country / territory of asylum/residence`== "Libya" | resettlement$`Country / territory of asylum/residence`== "Madagascar" | resettlement$`Country / territory of asylum/residence`== "Malawi" | resettlement$`Country / territory of asylum/residence`== "Mali" | resettlement$`Country / territory of asylum/residence`== "Mauritania" | resettlement$`Country / territory of asylum/residence`== "Mauritius" | resettlement$`Country / territory of asylum/residence`== "Morocco" | resettlement$`Country / territory of asylum/residence`== "Mozambique" | resettlement$`Country / territory of asylum/residence`== "Namibia" | resettlement$`Country / territory of asylum/residence`== "Niger" | resettlement$`Country / territory of asylum/residence`== "Nigeria" | resettlement$`Country / territory of asylum/residence`== "Rwanda" | resettlement$`Country / territory of asylum/residence`== "Sao Tome and Principe" | resettlement$`Country / territory of asylum/residence`== "Senegal" | resettlement$`Country / territory of asylum/residence`== "Seychelles" | resettlement$`Country / territory of asylum/residence`== "Sierra Leone" | resettlement$`Country / territory of asylum/residence`== "Somalia" | resettlement$`Country / territory of asylum/residence`== "South Africa" | resettlement$`Country / territory of asylum/residence`== "South Sudan" | resettlement$`Country / territory of asylum/residence`== "Sudan" | resettlement$`Country / territory of asylum/residence`== "United Rep. of Tanzania" | resettlement$`Country / territory of asylum/residence`== "Togo" | resettlement$`Country / territory of asylum/residence`== "Tunisia" | resettlement$`Country / territory of asylum/residence`== "Uganda" | resettlement$`Country / territory of asylum/residence`== "Zambia" | resettlement$`Country / territory of asylum/residence`== "Zimbabwe" | resettlement$`Country / territory of asylum/residence` == "Swaziland" | resettlement$`Country / territory of asylum/residence` == "Cabo Verde"]<-"Africa..Region.Resettle"
+
+
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Afghanistan" | resettlement$`Country / territory of asylum/residence` == "Bahrain" | resettlement$`Country / territory of asylum/residence` == "Iran (Islamic Rep. of)" | resettlement$`Country / territory of asylum/residence` == "Iraq" | resettlement$`Country / territory of asylum/residence` == "Israel" | resettlement$`Country / territory of asylum/residence` == "Israel" | resettlement$`Country / territory of asylum/residence` == "Jordan" | resettlement$`Country / territory of asylum/residence` == "Kuwait" | resettlement$`Country / territory of asylum/residence` == "Lebanon" | resettlement$`Country / territory of asylum/residence` == "Oman" | resettlement$`Country / territory of asylum/residence` == "Palestinian" | resettlement$`Country / territory of asylum/residence` == "Qatar" | resettlement$`Country / territory of asylum/residence` == "Saudi Arabia" | resettlement$`Country / territory of asylum/residence` == "Syrian Arab Rep." | resettlement$`Country / territory of asylum/residence` == "Turkey" | resettlement$`Country / territory of asylum/residence` == "United Arab Emirates" | resettlement$`Country / territory of asylum/residence` == "Yemen" | resettlement$`Country / territory of asylum/residence` == "Egypt"] <- "Mid.East.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Argentina" | resettlement$`Country / territory of asylum/residence` == "Belize" | resettlement$`Country / territory of asylum/residence` == "Bolivia (Plurinational State of)" | resettlement$`Country / territory of asylum/residence` == "Brazil" | resettlement$`Country / territory of asylum/residence` == "Chile" | resettlement$`Country / territory of asylum/residence` == "Colombia" | resettlement$`Country / territory of asylum/residence` == "Costa Rica" | resettlement$`Country / territory of asylum/residence` == "Cuba" | resettlement$`Country / territory of asylum/residence` == "Dominican Republic" | resettlement$`Country / territory of asylum/residence` == "Ecuador" | resettlement$`Country / territory of asylum/residence` == "El Salvador" | resettlement$`Country / territory of asylum/residence` == "Guatamala" | resettlement$`Country / territory of asylum/residence` == "Guyana" | resettlement$`Country / territory of asylum/residence` == "Haiti" | resettlement$`Country / territory of asylum/residence` == "Honduras" | resettlement$`Country / territory of asylum/residence` == " Jamaica" | resettlement$`Country / territory of asylum/residence` == "Mexico" | resettlement$`Country / territory of asylum/residence` == "Nicaragua" | resettlement$`Country / territory of asylum/residence` == "Panama" | resettlement$`Country / territory of asylum/residence` == "Peru" | resettlement$`Country / territory of asylum/residence` == "Venezuela (Bolivarian Republic of)" | resettlement$`Country / territory of asylum/residence` == "Uruguay" | resettlement$`Country / territory of asylum/residence` == "Trinidad and Tobago" | resettlement$`Country / territory of asylum/residence` == "Suriname" | resettlement$`Country / territory of asylum/residence` == "Saint Vincent and the Grenadines" | resettlement$`Country / territory of asylum/residence` == "Saint Lucia" | resettlement$`Country / territory of asylum/residence` == "Saint Kitts and Nevis" | resettlement$`Country / territory of asylum/residence` == "Paraguay" | resettlement$`Country / territory of asylum/residence` == "Barbados" | resettlement$`Country / territory of asylum/residence` == "Bermuda" | resettlement$`Country / territory of asylum/residence` == "Bahamas"]<-"Latin.America.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Andorra" | resettlement$`Country / territory of asylum/residence` == "Austria" | resettlement$`Country / territory of asylum/residence` == "Belgium" | resettlement$`Country / territory of asylum/residence` == "Denmark" | resettlement$`Country / territory of asylum/residence` == "Finland" | resettlement$`Country / territory of asylum/residence` == "France" | resettlement$`Country / territory of asylum/residence` == "Germany" | resettlement$`Country / territory of asylum/residence` == "Iceland" | resettlement$`Country / territory of asylum/residence` == "Malta" | resettlement$`Country / territory of asylum/residence` == "Netherlands" | resettlement$`Country / territory of asylum/residence` == "Norway" | resettlement$`Country / territory of asylum/residence` == "Portugal" | resettlement$`Country / territory of asylum/residence` == "Spain" | resettlement$`Country / territory of asylum/residence` == "Sweden" | resettlement$`Country / territory of asylum/residence` == "Switzerland" | resettlement$`Country / territory of asylum/residence` == "United Kingdom of Great Britain and Northern Ireland" | resettlement$`Country / territory of asylum/residence` == "Ireland"]<-"Western.Europe.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Albania" | resettlement$`Country / territory of asylum/residence` == "Armenia" | resettlement$`Country / territory of asylum/residence` == "Azerbaijan" | resettlement$`Country / territory of asylum/residence` == "Belarus" | resettlement$`Country / territory of asylum/residence` == "Bosnia and Herzegovina" | resettlement$`Country / territory of asylum/residence` == "Bulgaria" | resettlement$`Country / territory of asylum/residence` == "Croatia" | resettlement$`Country / territory of asylum/residence` == "Cyprus" | resettlement$`Country / territory of asylum/residence` == "Czech Rep." | resettlement$`Country / territory of asylum/residence` == "Estonia" | resettlement$`Country / territory of asylum/residence` == "Georgia" | resettlement$`Country / territory of asylum/residence` == "Greece" | resettlement$`Country / territory of asylum/residence` == "Hungary" | resettlement$`Country / territory of asylum/residence` == "Kazakhstan" | resettlement$`Country / territory of asylum/residence` == "Kyrgyzstan" | resettlement$`Country / territory of asylum/residence` == "Latvia" | resettlement$`Country / territory of asylum/residence` == "Lithuania" | resettlement$`Country / territory of asylum/residence` == "Montenegro" | resettlement$`Country / territory of asylum/residence` == "Poland" | resettlement$`Country / territory of asylum/residence` == "Rep. of Moldova" | resettlement$`Country / territory of asylum/residence` == "Romania" | resettlement$`Country / territory of asylum/residence` == "Russian Federation" | resettlement$`Country / territory of asylum/residence` == "Serbia and Kosovo: S/RES/1244 (1999)" | resettlement$`Country / territory of asylum/residence` == "Slovakia" | resettlement$`Country / territory of asylum/residence` == "Slovenia" | resettlement$`Country / territory of asylum/residence` == "Tajikistan" | resettlement$`Country / territory of asylum/residence` == "The former Yugoslav Rep. of Macedonia" | resettlement$`Country / territory of asylum/residence` == "Turkmenistan" | resettlement$`Country / territory of asylum/residence` == "Ukraine" | resettlement$`Country / territory of asylum/residence` == "Uzbekistan"]<-"Eastern.Europe.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Australia" | resettlement$`Country / territory of asylum/residence` == "Brunei Darussalam" | resettlement$`Country / territory of asylum/residence` == "Cambodia" | resettlement$`Country / territory of asylum/residence` == "Fiji" | resettlement$`Country / territory of asylum/residence` == "French Polynesia" | resettlement$`Country / territory of asylum/residence` == "Indonesia" | resettlement$`Country / territory of asylum/residence` == "Lao People's Dem. Rep." | resettlement$`Country / territory of asylum/residence` == "Malaysia" | resettlement$`Country / territory of asylum/residence` == "Myanmar" | resettlement$`Country / territory of asylum/residence` == "Papua New Guinea" | resettlement$`Country / territory of asylum/residence` == "Philippines" | resettlement$`Country / territory of asylum/residence` == "Samoa" | resettlement$`Country / territory of asylum/residence` == "Singapore" | resettlement$`Country / territory of asylum/residence` == "Solomon Islands" | resettlement$`Country / territory of asylum/residence` == "Thailand" | resettlement$`Country / territory of asylum/residence` == "Timor-Leste" | resettlement$`Country / territory of asylum/residence` == "Tonga" | resettlement$`Country / territory of asylum/residence` == "Tuvalu" | resettlement$`Country / territory of asylum/residence` == "Viet Nam" | resettlement$`Country / territory of asylum/residence` == "New Zealand"]<-"Southeast.Asia.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Tibetan" | resettlement$`Country / territory of asylum/residence` == "Sri Lanka" | resettlement$`Country / territory of asylum/residence` == "Pakistan" | resettlement$`Country / territory of asylum/residence` == "Nepal" | resettlement$`Country / territory of asylum/residence` == "Maldives" | resettlement$`Country / territory of asylum/residence` == "India" | resettlement$`Country / territory of asylum/residence` == "Bhutan" | resettlement$`Country / territory of asylum/residence` == "Bangladesh"] <-"Indian.Subcontinent.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "Canada" | resettlement$`Country / territory of asylum/residence` == "United States of America"]<- "North.America.Region.Resettle"
+
+resettlement$Region.Resettle[resettlement$`Country / territory of asylum/residence` == "China" | resettlement$`Country / territory of asylum/residence` == "Rep. of Korea" | resettlement$`Country / territory of asylum/residence` == "Mongolia" | resettlement$`Country / territory of asylum/residence` == "Japan" | resettlement$`Country / territory of asylum/residence` == "Dem. People's Rep. of Korea" | resettlement$`Country / territory of asylum/residence` == "China, Hong Kong SAR"]<-"Asia.Region.Resettle"
+
+
+resettlement$Region.Resettle<- as.factor(resettlement$Region.Resettle)
+
+
+table(resettlement$Region.Resettle)
+
+
+
+
+
+```
+
+```{r Subset countries of origin by continent or region : AFRICA}
+
+##Subset countries of origin by continent or region : AFRICA
+
+
+Africa<-subset(resettlement, Origin == "Algeria" | Origin == "Angola" | Origin == "Benin"| Origin == "Botswana" | Origin == "Burkina Faso" | Origin == "Burundi" | Origin == "Cameroon" | Origin == "Central African Rep." | Origin == "Chad" | Origin == "Côte d'Ivoire" | Origin == "Comoros" | Origin == "Congo" | Origin == "Djibouti" | Origin == "Equatorial Guinea" | Origin== "Eritrea" | Origin== "Ethiopia" | Origin== "Gabon" | Origin== "Gambia" | Origin== "Ghana" | Origin== "Guinea" | Origin== "Guinea-Bissau" | Origin== "Kenya" | Origin== "Lesotho" | Origin== "Liberia" | Origin== "Libya" | Origin== "Madagascar" | Origin== "Malawi" | Origin== "Mali" | Origin== "Mauritania" | Origin== "Mauritius" | Origin== "Morocco" | Origin== "Mozambique" | Origin== "Namibia" | Origin== "Niger" | Origin== "Nigeria" | Origin== "Rwanda" | Origin== "Sao Tome and Principe" | Origin== "Senegal" | Origin== "Seychelles" | Origin== "Sierra Leone" | Origin== "Somalia" | Origin== "South Africa" | Origin== "South Sudan" | Origin== "Sudan" | Origin== "United Rep. of Tanzania" | Origin== "Togo" | Origin== "Tunisia" | Origin== "Uganda" | Origin== "Zambia" | Origin== "Zimbabwe" | Origin == "Swaziland" | Origin == "Cabo Verde")
+head(Africa)
+
+print(Africa)
+
+#Number of Refugees from Africa
+sum(Africa$Value, na.rm=TRUE)
+
+```
+
+```{r Subset countries of origin by continent or region : MIDDLE EAST}
+##Subset countries of origin by continent or region : MIDDLE EAST
+
+sum(resettlement$Value[resettlement$Origin=="Uganda"], na.rm=TRUE)
+
+Mid.East<-subset(resettlement, Origin == "Afghanistan" | Origin == "Bahrain" | Origin == "Iran (Islamic Rep. of)" | Origin == "Iraq" | Origin == "Israel" | Origin == "Israel" | Origin == "Jordan" | Origin == "Kuwait" | Origin == "Lebanon" | Origin == "Oman" | Origin == "Palestinian" | Origin == "Qatar" | Origin == "Saudi Arabia" | Origin == "Syrian Arab Rep." | Origin == "Turkey" | Origin == "United Arab Emirates" | Origin == "Yemen" | Origin == "Egypt")
+
+head(Mid.East)
+
+sum(Mid.East$Value, na.rm=TRUE)
+```
+
+```{r Subset countries of origin by continent or region : LATIN AMERICA}
+##Subset countries of origin by continent or region : LATIN AMERICA
+
+
+
+Latin.America<-subset(resettlement, Origin == "Argentina" | Origin == "Belize" | Origin == "Bolivia (Plurinational State of)" | Origin == "Brazil" | Origin == "Chile" | Origin == "Colombia" | Origin == "Costa Rica" | Origin == "Cuba" | Origin == "Dominican Republic" | Origin == "Ecuador" | Origin == "El Salvador" | Origin == "Guatamala" | Origin == "Guyana" | Origin == "Haiti" | Origin == "Honduras" | Origin == " Jamaica" | Origin == "Mexico" | Origin == "Nicaragua" | Origin == "Panama" | Origin == "Peru" | Origin == "Venezuela (Bolivarian Republic of)" | Origin == "Uruguay" | Origin == "Trinidad and Tobago" | Origin == "Suriname" | Origin == "Saint Vincent and the Grenadines" | Origin == "Saint Lucia" | Origin == "Saint Kitts and Nevis" | Origin == "Paraguay" | Origin == "Barbados" | Origin == "Bermuda" | Origin == "Bahamas")
+
+head(Latin.America)
+
+sum(Latin.America$Value, na.rm=TRUE)
+
+
+
+```
+
+```{r Subset countries of origin by continent or region : WESTERN EUROPE}
+
+##Subset countries of origin by continent or region : WESTERN EUROPE
+
+
+Western.Europe<-subset(resettlement, Origin == "Andorra" | Origin == "Austria" | Origin == "Belgium" | Origin == "Denmark" | Origin == "Finland" | Origin == "France" | Origin == "Germany" | Origin == "Iceland" | Origin == "Malta" | Origin == "Netherlands" | Origin == "Norway" | Origin == "Portugal" | Origin == "Spain" | Origin == "Sweden" | Origin == "Switzerland" | Origin == "United Kingdom of Great Britain and Northern Ireland" | Origin == "Ireland")
+
+
+head(Western.Europe)
+
+sum(Western.Europe$Value, na.rm=TRUE)
+
+```
+
+```{r Subset countries of origin by continent or region : EASTERN EUROPE}
+
+##Subset countries of origin by continent or region : EASTERN EUROPE
+
+
+Eastern.Europe<-subset(resettlement, Origin == "Albania" | Origin == "Armenia" | Origin == "Azerbaijan" | Origin == "Belarus" | Origin == "Bosnia and Herzegovina" | Origin == "Bulgaria" | Origin == "Croatia" | Origin == "Cyprus" | Origin == "Czech Rep." | Origin == "Estonia" | Origin == "Georgia" | Origin == "Greece" | Origin == "Hungary" | Origin == "Kazakhstan" | Origin == "Kyrgyzstan" | Origin == "Latvia" | Origin == "Lithuania" | Origin == "Montenegro" | Origin == "Poland" | Origin == "Rep. of Moldova" | Origin == "Romania" | Origin == "Russian Federation" | Origin == "Serbia and Kosovo: S/RES/1244 (1999)" | Origin == "Slovakia" | Origin == "Slovenia" | Origin == "Tajikistan" | Origin == "The former Yugoslav Rep. of Macedonia" | Origin == "Turkmenistan" | Origin == "Ukraine" | Origin == "Uzbekistan")
+
+
+head(Eastern.Europe)
+
+sum(Eastern.Europe$Value, na.rm=TRUE)
+```
+
+```{r Subset countries of origin by continent or region : SOUTHEAST ASIA}
+
+##Subset countries of origin by continent or region : SOUTHEAST ASIA
+
+Southeast.Asia<-subset(resettlement, Origin == "Australia" | Origin == "Brunei Darussalam" | Origin == "Cambodia" | Origin == "Fiji" | Origin == "French Polynesia" | Origin == "Indonesia" | Origin == "Lao People's Dem. Rep." | Origin == "Malaysia" | Origin == "Myanmar" | Origin == "Papua New Guinea" | Origin == "Philippines" | Origin == "Samoa" | Origin == "Singapore" | Origin == "Solomon Islands" | Origin == "Thailand" | Origin == "Timor-Leste" | Origin == "Tonga" | Origin == "Tuvalu" | Origin == "Viet Nam" | Origin == "New Zealand")
+
+
+head(Southeast.Asia)
+
+sum(Southeast.Asia$Value, na.rm=TRUE)
+
+```
+
+```{r Subset countries of origin by continent or region : INDIAN SUBCONTINENT}
+
+##Subset countries of origin by continent or region : INDIAN SUBCONTINENT
+
+
+Indian.Subcontinent<-subset(resettlement, Origin == "Tibetan" | Origin == "Sri Lanka" | Origin == "Pakistan" | Origin == "Nepal" | Origin == "Maldives" | Origin == "India" | Origin == "Bhutan" | Origin == "Bangladesh")
+
+
+head(Indian.Subcontinent)
+
+sum(Indian.Subcontinent$Value, na.rm=TRUE)
+```
+
+```{r Subset countries of origin by continent or region : NORTH AMERICA}
+##Subset countries of origin by continent or region : NORTH AMERICA
+
+
+North.America<-subset(resettlement, Origin == "Canada" | Origin == "United States of America")
+
+
+head(North.America)
+
+sum(North.America$Value, na.rm=TRUE)
+```
+
+```{r Subset countries of origin by continent or region : ASIA}
+##Subset countries of origin by continent or region : ASIA
+
+
+Asia<-subset(resettlement, Origin == "China" | Origin == "Rep. of Korea" | Origin == "Mongolia" | Origin == "Japan" | Origin == "Dem. People's Rep. of Korea" | Origin == "China, Hong Kong SAR")
+
+
+head(Asia)
+
+sum(Asia$Value, na.rm=TRUE)
+```
+
+```{r Subset countries of origin by continent or region : STATELESS}
+##Subset countries of origin by continent or region : STATELESS
+
+
+Stateless<-subset(resettlement, Origin == "Stateless")
+
+
+head(Stateless)
+
+
+sum(Stateless$Value, na.rm=TRUE)
+
+```
+
+```{r Subset countries of origin by continent or region : VARIOUS/UNKNOWN}
+##Subset countries of origin by continent or region : VARIOUS/UNKNOWN
+
+
+Various.Unknown<-subset(resettlement, Origin == "Various/unknown")
+
+
+head(Various.Unknown)
+
+
+sum(Various.Unknown$Value, na.rm=TRUE)
+```
+
+```{r}
+##Subset for Countries in USSR
+Iron.Curtain<-subset(resettlement, Origin == "Poland" | Origin == "Russian Federation" | Origin == "Belarus" | Origin =="Latvia" |Origin == "Ukraine" |Origin == "Estonia" | Origin =="Moldova" | Origin =="Armenia" |Origin == "Azerbijian" | Origin =="Georgia" | Origin =="Uzbekistan" |Origin == "Lithuania" |Origin == " Kyrgyzstan" | Origin ==" Tajikistan" | Origin =="Turkmenistan" | Origin =="Kazakhstan" | Origin =="Hungary" | Origin =="Romania" | Origin =="Bulgaria" |Origin == "Albania" |Origin == "Czech Rep.")
+```
+
+
+```{r Subset by years in five year increments}
+##Subset by years in five year increments 
+
+year.1959.to.1965<-subset(resettlement, Year == "1959" | Year == "1960" | Year == "1961" | Year == "1962" | Year == "1963" | Year == "1964" | Year == "1965") 
+year.1966.to.1970<-subset(resettlement, Year == "1966" | Year == "1967" | Year == "1968" | Year == "1969" | Year == "1970")
+year.1971.to.1975<-subset(resettlement, Year == "1971" | Year == "1972" | Year == "1973" | Year == "1974" | Year == "1975")
+year.1976.to.1980<-subset(resettlement, Year == "1976" | Year == "1977" | Year == "1978" | Year == "1979" | Year == "1980")
+year.1981.to.1985<-subset(resettlement, Year == "1981" | Year == "1982" | Year == "1983" | Year == "1984" | Year == "1985")
+year.1986.to.1990<-subset(resettlement, Year == "1986" | Year == "1987" | Year == "1988" | Year == "1989" | Year == "1990")
+year.1991.to.1995<-subset(resettlement,  Year == "1991" | Year == "1992" | Year == "1993" | Year == "1994" | Year == "1995")
+year.1996.to.2000<-subset(resettlement, Year == "1996" | Year == "1997" | Year == "1998" | Year == "1999" | Year == "2000")
+year.2001.to.2005<-subset(resettlement, Year == "2001" | Year == "2002" | Year == "2003" | Year == "2004" | Year == "2005")
+year.2006.to.2010<-subset(resettlement, Year == "2006" | Year == "2007" | Year == "2008" | Year == "2009" | Year == "2010")
+year.2011.to.2016<-subset(resettlement, Year == "2011" | Year == "2012" | Year == "2013" | Year == "2014" | Year == "2015" | Year == "2016")
+
+sum(year.1959.to.1965$Value)
+sum(year.1966.to.1970$Value)
+sum(year.1971.to.1975$Value)
+sum(year.1976.to.1980$Value)
+sum(year.1981.to.1985$Value)
+sum(year.1986.to.1990$Value)
+sum(year.1991.to.1995$Value)
+sum(year.1996.to.2000$Value)
+sum(year.2001.to.2005$Value)
+sum(year.2006.to.2010$Value)
+sum(year.2011.to.2016$Value, na.rm=TRUE)
+
+
+counts <- table(resettlement$Region.Origin)
+barplot(counts, 
+       
+                      main="Number of Refugees By Region", 
+   xlab="Regions")
+
+
+plot(resettlement$Year,resettlement$Value,xlab="Year",ylab="Amount of Asylum Seekers", col="hotpink4")
+
+plot(year.1976.to.1980$Year, year.1976.to.1980$Value, ylab="Amount of Asylum Seekers", col ="palegreen4")
+
+```
+
+
+```{r EE To US}
+#regression and plot for all of Eastern European Origin
+
+##subset for EE after Cold War
+EE_Cold_War<-subset(Iron.Curtain, Year >= "1991" & `Country / territory of asylum/residence` == "United States of America")
+head(EE_Cold_War)
+
+print(EE_Cold_War)
+
+res_fit_EE<-lm(Value ~ Year, data = EE_Cold_War)
+res_fit_EE
+
+plot(x=EE_Cold_War$Year, y = EE_Cold_War$Value,
+     col = "tan1", frame = FALSE,
+)
+abline(res_fit_EE)
+
+res_fit_EE_sum<-summary(res_fit_EE)
+res_fit_EE_sum$r.squared
+```
+
+
+```{r}
+## Try loop a different way
+
+values<-c(unique(resettlement$Year))
+n<-length(values)
+results<-rep(NA, n)
+for (i in 1:n) {
+  cat("refugees")
+  results[i]<- resettlement$Value
+}
+
+results[i]<- resettlement$Value
+
+
+```
+
+```{r}
+##Linear regression
+
+fit<-lm(resettlement$Origin, resettlement$`Country / territory of asylum/residence`)
+fit
+
+```
+```{r}
+##number of Vietnam refugees by year
+
+plot(x=Vietnam$Value, y = Vietnam$Year,
+     col = "hotpink4", frame = FALSE,
+)
+```
+```{r}
+
+#regression and plot for all of Veitname subset
+res_fit<-lm(Value ~ Year, data = Vietnam)
+res_fit
+
+plot(x=Vietnam$Year, y = Vietnam$Value,
+     col = "palegreen3", frame = FALSE,
+)
+abline(res_fit)
+
+res_fit_sum<-summary(res_fit)
+res_fit_sum$r.squared
+
+
+
+```
+```{r}
+#regression and plot for all of Myanmar subset
+res_fit_myanmar<-lm(Value ~ Year, data = Myanmar)
+res_fit_myanmar
+
+plot(x=Myanmar$Year, y = Myanmar$Value,
+     col = "pink", frame = FALSE,
+)
+abline(res_fit)
+
+res_fit_myanmar_sum<-summary(res_fit_myanmar)
+res_fit_myanmar_sum$r.squared
+```
+
+
+
+
+```{r Regression for Russia to North America}
+#regression and plot for all of Russia subset to North America
+Russia_NorAm<-subset(resettlement, Origin == "Russian Federation" & Region.Resettle == "North.America.Region.Resettle" & (Year >= "1989" & Year <= "2003"))
+head(Russia_NorAm)
+
+
+res_fit_russia_NorAm<-lm(Value ~ Year, data = Russia_NorAm)
+res_fit_russia_NorAm
+
+plot(x=Russia_NorAm$Year, y = Russia_NorAm$Value,
+     col = "pink", frame = FALSE,
+)
+abline(res_fit_russia_NorAm)
+
+res_fit_russia_NorAm_sum<-summary(res_fit_russia_NorAm)
+res_fit_russia_NorAm_sum$r.squared
+
+```
+
+```{r Regression for Sudan to North America following civil war}
+#subset for Sudan
+Sudan<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Sudan"))
+head(Sudan)
+
+
+plot(x=Sudan$Year, y = Sudan$Value,
+     col = "goldenrod", frame = FALSE,
+)
+abline(Sudan_fit)
+
+Sudan_fit<-lm(Value ~ Year, data = Sudan)
+Sudan_fit
+
+Sudan_fit_sum<-summary(Sudan_fit)
+Sudan_fit_sum$r.squared
+```
+
+```{r Regression for Syrian Refugees to North America following Civil War}
+##GOOD FIT
+##USE
+#subset for Syrian Refugees to North America following Civil War
+Syria<-subset(resettlement, Origin == "Syrian Arab Rep." & (`Country / territory of asylum/residence` == "United States of America" | `Country / territory of asylum/residence` == "Canada") & Year >= "2011")
+head(Syria)
+
+
+plot(x=Syria$Year, y = Syria$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Syria_fit)
+
+Syria_fit<-lm(Value ~ Year, data = Syria)
+Syria_fit
+
+Syria_fit_sum<-summary(Syria_fit)
+Syria_fit_sum$r.squared
+```
+
+```{r Regression for Entire Data Set}
+
+## linerar regression for entire data set
+
+
+
+Resettle_fit<-lm(Value ~ Year, data = resettlement)
+Resettle_fit
+
+plot(x=resettlement$Year, y = resettlement$Value,
+     col = "lightcyan2", frame = FALSE,
+)
+abline(Resettle_fit)
+
+Resettle_fit_sum<-summary(Resettle_fit)
+Resettle_fit_sum$r.squared
+
+```
+
+```{r Regression for Entire Data Set RESETTLE TO North America}
+
+## linerar regression for entire data set RESETTLE to North America
+
+All.NorAm<-subset(resettlement, Region.Resettle == "North.America.Region.Resettle")
+head(All.NorAm)
+
+All.NorAm_fit<-lm(Value ~ Year, data = All.NorAm)
+All.NorAm_fit
+
+plot(x=All.NorAm$Year, y = All.NorAm$Value,
+     col = "goldenrod2", frame = FALSE,
+)
+abline(All.NorAm_fit)
+
+All.NorAm_fit_sum<-summary(All.NorAm_fit)
+All.NorAm_fit_sum$r.squared
+
+```
+
+```{r Vietnam to North America}
+Vietnam.NorAm<-subset(resettlement, Origin == "Viet Nam" & Region.Resettle == "North.America.Region.Resettle")
+head(Vietnam.NorAm)
+
+Viet_NorAm_fit<-lm(Value ~ Year, data = Vietnam.NorAm)
+Viet_NorAm_fit
+
+plot(x=Vietnam.NorAm$Year, y = Vietnam.NorAm$Value,
+     col = "red", frame = FALSE,
+)
+abline(Viet_NorAm_fit)
+
+Viet_NorAm_fit_sum<-summary(Viet_NorAm_fit)
+Viet_NorAm_fit_sum$r.squared
+```
+
+
+
+
+```{r Iraq to the Us}
+##Iraq to the US
+Iraq.US<-subset(resettlement, Origin == "Iraq" & `Country / territory of asylum/residence` == "United States of America")
+head(Iraq.US)
+
+Iraq.US_fit<-lm(Value ~ Year, data = Iraq.US)
+Iraq.US_fit
+
+plot(x=Iraq.US$Year, y = Iraq.US$Value,
+     col = "red", frame = FALSE,
+)
+abline(Iraq.US_fit)
+
+Iraq.US_fit_sum<-summary(Iraq.US_fit)
+Iraq.US_fit_sum$r.squared
+
+```
+
+```{r Vietnam to US}
+##GOOD FIT!!
+##Subset Vietnam resettle to US
+Vietnam.US<-subset(resettlement, Origin == "Viet Nam" & `Country / territory of asylum/residence` == "United States of America")
+head(Vietnam.US)
+
+Viet_US_fit<-lm(Value ~ Year, data = Vietnam.US)
+Viet_US_fit
+
+plot(x=Vietnam.US$Year, y = Vietnam.US$Value,
+     col = "red", frame = FALSE,
+)
+abline(Viet_US_fit)
+
+Viet_US_fit_sum<-summary(Viet_US_fit)
+Viet_US_fit_sum$r.squared
+
+```
+
+```{r All refugees to the US}
+## All refugees to the US
+To.US<-subset(resettlement, `Country / territory of asylum/residence` == "United States of America")
+head(To.US)
+
+To_US_fit<-lm(Value ~ Year, data = To.US)
+To_US_fit
+
+plot(x=To.US$Year, y = To.US$Value,
+     col = "darkred", frame = FALSE,
+)
+abline(To_US_fit)
+
+To_US_fit_sum<-summary(To_US_fit)
+To_US_fit_sum$r.squared
+
+```
+
+```{r Eritrea to US}
+##GOOD FIT!!
+##Subset Eritrea resettle to N. America
+Eritrea.US<-subset(resettlement, Origin == "Eritrea" & (`Country / territory of asylum/residence` == "United States of America" ))
+head(Eritrea.US)
+
+
+
+Eritrea_US_fit<-lm(Value ~ Year, data = Eritrea.US)
+Eritrea_US_fit
+
+plot(x=Eritrea.US$Year, y = Eritrea.US$Value,
+     col = "brown", frame = FALSE,
+)
+abline(Eritrea_US_fit)
+
+Eritrea_US_fit_sum<-summary(Eritrea_US_fit)
+Eritrea_US_fit_sum$r.squared
+```
+
+```{r Ethiopia to US}
+##GOOD FIT!!
+##Subset Ethiopea resettle to N. America
+Ethiopia.NorAm<-subset(resettlement, Origin == "Ethiopia" & (`Country / territory of asylum/residence` == "United States of America" ) & Year >=1972)
+head(Ethiopia.NorAm)
+
+
+
+Ethiopia_NorAm_fit<-lm(Value ~ Year, data = Ethiopia.NorAm)
+Ethiopia_NorAm_fit
+
+plot(x=Ethiopia.NorAm$Year, y = Ethiopia.NorAm$Value,
+     col = "lightblue4", frame = FALSE,
+)
+abline(Ethiopia_NorAm_fit)
+
+Ethiopia_NorAm_fit_sum<-summary(Ethiopia_NorAm_fit)
+Ethiopia_NorAm_fit_sum$r.squared
+```
+
+```{r Russia to US after Cold War}
+##GOOD FIT!!!
+##Russia to US after the Fall of the Berlin Wall
+Resettle.Russia.US<-subset(resettlement, (Year >= 1990 & Year <= 2000) & (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Russian Federation"))
+head(Resettle.Russia.US)
+
+Resettle.Russia.US_fit<-lm(Value ~ Year, data = Resettle.Russia.US)
+Resettle.Russia.US_fit
+
+plot(x=Resettle.Russia.US$Year, y = Resettle.Russia.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Resettle.Russia.US_fit)
+
+Resettle.Russia.US_fit_sum<-summary(Resettle.Russia.US_fit)
+Resettle.Russia.US_fit_sum$r.squared
+```
+
+```{r DRC to US since conflict}
+##good fit
+##DCR to US since conflict
+DRC.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Dem. Rep. of the Congo") & Year >= "1996")
+head(DRC.US)
+
+DRC.US_fit<-lm(Value ~ Year, data = DRC.US)
+Resettle.Russia.US_fit
+
+plot(x=DRC.US$Year, y = DRC.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(DRC.US_fit)
+
+DRC.US_fit_sum<-summary(DRC.US_fit)
+DRC.US_fit_sum$r.squared
+```
+
+```{r Cambodia to US}
+##good fit
+##Cambodia to US during and after Khmer Rouge
+Cambodia.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Cambodia") & Year >= "1975")
+head(Cambodia.US)
+
+Cambodia.US_fit<-lm(Value ~ Year, data = Cambodia.US)
+Cambodia.US_fit
+
+plot(x=Cambodia.US$Year, y = Cambodia.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Cambodia.US_fit)
+
+Cambodia.US_fit_sum<-summary(Cambodia.US_fit)
+Cambodia.US_fit_sum$r.squared
+```
+
+```{r Myanmar to the US}
+##Myanmar to the US
+Myanmar.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Myanmar"))
+head(Myanmar.US)
+
+Myanmar.US_fit<-lm(Value ~ Year, data = Myanmar.US)
+Myanmar.US_fit
+
+plot(x=Myanmar.US$Year, y = Myanmar.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Myanmar.US_fit)
+
+Myanmar.US_fit_sum<-summary(Myanmar.US_fit)
+Myanmar.US_fit_sum$r.squared
+```
+
+```{r Rwanda to the US}
+##Rwanda to the US
+Rwanda.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Rwanda"))
+head(Rwanda.US)
+
+Rwanda.US_fit<-lm(Value ~ Year, data = Rwanda.US)
+Rwanda.US_fit
+
+plot(x=Rwanda.US$Year, y = Rwanda.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Rwanda.US_fit)
+
+Rwanda.US_fit_sum<-summary(Rwanda.US_fit)
+Rwanda.US_fit_sum$r.squared
+```
+
+```{r Burundi to US}
+##Burundi to the US
+Burundi.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Burundi"))
+head(Burundi.US)
+
+Burundi.US_fit<-lm(Value ~ Year, data = Burundi.US)
+Burundi.US_fit
+
+plot(x=Burundi.US$Year, y = Burundi.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Burundi.US_fit)
+
+Burundi.US_fit_sum<-summary(Burundi.US_fit)
+Burundi.US_fit_sum$r.squared
+```
+
+```{r Bosnia to the US}
+##Bosnia and Herzegovina to US
+Bosnia.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Bosnia and Herzegovina"))
+head(Bosnia.US)
+
+Bosnia.US_fit<-lm(Value ~ Year, data = Bosnia.US)
+Bosnia.US_fit
+
+plot(x=Bosnia.US$Year, y = Bosnia.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Bosnia.US_fit)
+
+Bosnia.US_fit_sum<-summary(Bosnia.US_fit)
+Bosnia.US_fit_sum$r.squared
+
+```
+
+```{r Afghanistan to the US}
+##Afghanistan to the US
+Afghanistan.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Afghanistan"))
+head(Afghanistan.US)
+
+Afghanistan.US_fit<-lm(Value ~ Year, data = Afghanistan.US)
+Afghanistan.US_fit
+
+plot(x=Afghanistan.US$Year, y = Afghanistan.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Afghanistan.US_fit)
+
+Afghanistan.US_fit_sum<-summary(Afghanistan.US_fit)
+Afghanistan.US_fit_sum$r.squared
+```
+
+```{r Central African Republic to US}
+##Central African Rep. to US
+CenAfRep.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Central African Rep."))
+head(CenAfRep.US)
+
+CenAfRep.US_fit<-lm(Value ~ Year, data = CenAfRep.US)
+CenAfRep.US_fit
+
+plot(x=CenAfRep.US$Year, y = CenAfRep.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(CenAfRep.US_fit)
+
+CenAfRep.US_fit_sum<-summary(CenAfRep.US_fit)
+CenAfRep.US_fit_sum$r.squared
+
+```
+
+```{r Liberia to US}
+##Liberia to US
+Liberia.US<-subset(resettlement, (`Country / territory of asylum/residence` == "United States of America") & (Origin == "Liberia") & Year <=2007)
+head(Liberia.US)
+
+Liberia.US_fit<-lm(Value ~ Year, data = Liberia.US)
+Liberia.US_fit
+
+plot(x=Liberia.US$Year, y = Liberia.US$Value,
+     col = "mediumpurple3", frame = FALSE,
+)
+abline(Liberia.US_fit)
+
+Liberia.US_fit_sum<-summary(Liberia.US_fit)
+Liberia.US_fit_sum$r.squared
+```
+
+
+
+```{r Subsetting by Country of Resettlement : AFRICA}
+##Subsetting by Country of Resettlement : AFRICA
+
+Africa.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Algeria" | `Country / territory of asylum/residence` == "Angola" | `Country / territory of asylum/residence` == "Benin"| `Country / territory of asylum/residence` == "Botswana" | `Country / territory of asylum/residence` == "Burkina Faso" | `Country / territory of asylum/residence` == "Burundi" | `Country / territory of asylum/residence` == "Cameroon" | `Country / territory of asylum/residence` == "Central African Rep." | `Country / territory of asylum/residence` == "Chad" | `Country / territory of asylum/residence` == "Côte d'Ivoire" | `Country / territory of asylum/residence` == "Comoros" | `Country / territory of asylum/residence` == "Congo" | `Country / territory of asylum/residence` == "Djibouti" | `Country / territory of asylum/residence` == "Equatorial Guinea" | `Country / territory of asylum/residence`== "Eritrea" | `Country / territory of asylum/residence`== "Ethiopia" | `Country / territory of asylum/residence`== "Gabon" | `Country / territory of asylum/residence`== "Gambia" | `Country / territory of asylum/residence`== "Ghana" | `Country / territory of asylum/residence`== "Guinea" | `Country / territory of asylum/residence`== "Guinea-Bissau" | `Country / territory of asylum/residence`== "Kenya" | `Country / territory of asylum/residence`== "Lesotho" | `Country / territory of asylum/residence`== "Liberia" | `Country / territory of asylum/residence`== "Libya" | `Country / territory of asylum/residence`== "Madagascar" | `Country / territory of asylum/residence`== "Malawi" | `Country / territory of asylum/residence`== "Mali" | `Country / territory of asylum/residence`== "Mauritania" | `Country / territory of asylum/residence`== "Mauritius" | `Country / territory of asylum/residence`== "Morocco" | `Country / territory of asylum/residence`== "Mozambique" | `Country / territory of asylum/residence`== "Namibia" | `Country / territory of asylum/residence`== "Niger" | `Country / territory of asylum/residence`== "Nigeria" | `Country / territory of asylum/residence`== "Rwanda" | `Country / territory of asylum/residence`== "Sao Tome and Principe" | `Country / territory of asylum/residence`== "Senegal" | `Country / territory of asylum/residence`== "Seychelles" | `Country / territory of asylum/residence`== "Sierra Leone" | `Country / territory of asylum/residence`== "Somalia" | `Country / territory of asylum/residence`== "South Africa" | `Country / territory of asylum/residence`== "South Sudan" | `Country / territory of asylum/residence`== "Sudan" | `Country / territory of asylum/residence`== "United Rep. of Tanzania" | `Country / territory of asylum/residence`== "Togo" | `Country / territory of asylum/residence`== "Tunisia" | `Country / territory of asylum/residence`== "Uganda" | `Country / territory of asylum/residence`== "Zambia" | `Country / territory of asylum/residence`== "Zimbabwe" | `Country / territory of asylum/residence` == "Swaziland" | `Country / territory of asylum/residence` == "Cabo Verde")
+head(Africa.Resettle)
+
+
+
+#Number of Refugees from Africa
+sum(Africa.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : MIDDLE EAST}
+##Subsetting by Country of Resettlement : MIDDLE EAST
+
+sum(resettlement$Value[resettlement$Origin=="Uganda"], na.rm=TRUE)
+
+Mid.East.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Afghanistan" | `Country / territory of asylum/residence` == "Bahrain" | `Country / territory of asylum/residence` == "Iran (Islamic Rep. of)" | `Country / territory of asylum/residence` == "Iraq" | `Country / territory of asylum/residence` == "Israel" | `Country / territory of asylum/residence` == "Israel" | `Country / territory of asylum/residence` == "Jordan" | `Country / territory of asylum/residence` == "Kuwait" | `Country / territory of asylum/residence` == "Lebanon" | `Country / territory of asylum/residence` == "Oman" | `Country / territory of asylum/residence` == "Palestinian" | `Country / territory of asylum/residence` == "Qatar" | `Country / territory of asylum/residence` == "Saudi Arabia" | `Country / territory of asylum/residence` == "Syrian Arab Rep." | `Country / territory of asylum/residence` == "Turkey" | `Country / territory of asylum/residence` == "United Arab Emirates" | `Country / territory of asylum/residence` == "Yemen" | `Country / territory of asylum/residence` == "Egypt" )
+
+head(Mid.East.Resettle)
+
+sum(Mid.East.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : LATIN AMERICA}
+##Subsetting by Country of Resettlement : LATIN AMERICA
+
+Latin.America.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Argentina" | `Country / territory of asylum/residence` == "Belize" | `Country / territory of asylum/residence` == "Bolivia (Plurinational State of)" | `Country / territory of asylum/residence` == "Brazil" | `Country / territory of asylum/residence` == "Chile" | `Country / territory of asylum/residence` == "Colombia" | `Country / territory of asylum/residence` == "Costa Rica" | `Country / territory of asylum/residence` == "Cuba" | `Country / territory of asylum/residence` == "Dominican Republic" | `Country / territory of asylum/residence` == "Ecuador" | `Country / territory of asylum/residence` == "El Salvador" | `Country / territory of asylum/residence` == "Guatamala" | `Country / territory of asylum/residence` == "Guyana" | `Country / territory of asylum/residence` == "Haiti" | `Country / territory of asylum/residence` == "Honduras" | `Country / territory of asylum/residence` == " Jamaica" | `Country / territory of asylum/residence` == "Mexico" | `Country / territory of asylum/residence` == "Nicaragua" | `Country / territory of asylum/residence` == "Panama" | `Country / territory of asylum/residence` == "Peru" | `Country / territory of asylum/residence` == "Venezuela (Bolivarian Republic of)" | `Country / territory of asylum/residence` == "Uruguay" | `Country / territory of asylum/residence` == "Trinidad and Tobago" | `Country / territory of asylum/residence` == "Suriname" | `Country / territory of asylum/residence` == "Saint Vincent and the Grenadines" | `Country / territory of asylum/residence` == "Saint Lucia" | `Country / territory of asylum/residence` == "Saint Kitts and Nevis" | `Country / territory of asylum/residence` == "Paraguay" | `Country / territory of asylum/residence` == "Barbados" | `Country / territory of asylum/residence` == "Bermuda" | `Country / territory of asylum/residence` == "Bahamas")
+
+head(Latin.America.Resettle)
+
+sum(Latin.America.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : WESTERN EUROPE}
+
+##Subsetting by Country of Resettlement : WESTERN EUROPE
+
+
+Western.Europe.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Andorra" | `Country / territory of asylum/residence` == "Austria" | `Country / territory of asylum/residence` == "Belgium" | `Country / territory of asylum/residence` == "Denmark" | `Country / territory of asylum/residence` == "Finland" | `Country / territory of asylum/residence` == "France" | `Country / territory of asylum/residence` == "Germany" | `Country / territory of asylum/residence` == "Iceland" | `Country / territory of asylum/residence` == "Malta" | `Country / territory of asylum/residence` == "Netherlands" | `Country / territory of asylum/residence` == "Norway" | `Country / territory of asylum/residence` == "Portugal" | `Country / territory of asylum/residence` == "Spain" | `Country / territory of asylum/residence` == "Sweden" | `Country / territory of asylum/residence` == "Switzerland" | `Country / territory of asylum/residence` == "United Kingdom of Great Britain and Northern Ireland" | `Country / territory of asylum/residence` == "Ireland" | `Country / territory of asylum/residence` == "Italy" | `Country / territory of asylum/residence` == "Liechtenstein" | `Country / territory of asylum/residence` == "Luxembourg" | `Country / territory of asylum/residence` == "Monaco")
+
+
+head(Western.Europe.Resettle)
+
+sum(Western.Europe.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : EASTERN EUROPE}
+##Subsetting by Country of Resettlement : EASTERN EUROPE
+
+
+Eastern.Europe.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Albania" | `Country / territory of asylum/residence` == "Armenia" | `Country / territory of asylum/residence` == "Azerbaijan" | `Country / territory of asylum/residence` == "Belarus" | `Country / territory of asylum/residence` == "Bosnia and Herzegovina" | `Country / territory of asylum/residence` == "Bulgaria" | `Country / territory of asylum/residence` == "Croatia" | `Country / territory of asylum/residence` == "Cyprus" | `Country / territory of asylum/residence` == "Czech Rep." | `Country / territory of asylum/residence` == "Estonia" | `Country / territory of asylum/residence` == "Georgia" | `Country / territory of asylum/residence` == "Greece" | `Country / territory of asylum/residence` == "Hungary" | `Country / territory of asylum/residence` == "Kazakhstan" | `Country / territory of asylum/residence` == "Kyrgyzstan" | `Country / territory of asylum/residence` == "Latvia" | `Country / territory of asylum/residence` == "Lithuania" | `Country / territory of asylum/residence` == "Montenegro" | `Country / territory of asylum/residence` == "Poland" | `Country / territory of asylum/residence` == "Rep. of Moldova" | `Country / territory of asylum/residence` == "Romania" | `Country / territory of asylum/residence` == "Russian Federation" | `Country / territory of asylum/residence` == "Serbia and Kosovo: S/RES/1244 (1999)" | `Country / territory of asylum/residence` == "Slovakia" | `Country / territory of asylum/residence` == "Slovenia" | `Country / territory of asylum/residence` == "Tajikistan" | `Country / territory of asylum/residence` == "The former Yugoslav Rep. of Macedonia" | `Country / territory of asylum/residence` == "Turkmenistan" | `Country / territory of asylum/residence` == "Ukraine" | `Country / territory of asylum/residence` == "Uzbekistan")
+
+
+head(Eastern.Europe.Resettle)
+
+sum(Eastern.Europe.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : SOUTHEAST ASIA}
+##Subsetting by Country of Resettlement : SOUTHEAST ASIA
+
+Southeast.Asia.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Australia" | `Country / territory of asylum/residence` == "Brunei Darussalam" | `Country / territory of asylum/residence` == "Cambodia" | `Country / territory of asylum/residence` == "Fiji" | `Country / territory of asylum/residence` == "French Polynesia" | `Country / territory of asylum/residence` == "Indonesia" | `Country / territory of asylum/residence` == "Lao People's Dem. Rep." | `Country / territory of asylum/residence` == "Malaysia" | `Country / territory of asylum/residence` == "Myanmar" | `Country / territory of asylum/residence` == "Papua New Guinea" | `Country / territory of asylum/residence` == "Philippines" | `Country / territory of asylum/residence` == "Samoa" | `Country / territory of asylum/residence` == "Singapore" | `Country / territory of asylum/residence` == "Solomon Islands" | `Country / territory of asylum/residence` == "Thailand" | `Country / territory of asylum/residence` == "Timor-Leste" | `Country / territory of asylum/residence` == "Tonga" | `Country / territory of asylum/residence` == "Tuvalu" | `Country / territory of asylum/residence` == "Viet Nam" | `Country / territory of asylum/residence` == "New Zealand")
+
+
+head(Southeast.Asia.Resettle)
+
+sum(Southeast.Asia.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : INDIAN SUBCONTINENT}
+##Subsetting by Country of Resettlement : INDIAN SUBCONTINENT
+
+
+Indian.Subcontinent.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Tibetan" | `Country / territory of asylum/residence` == "Sri Lanka" | `Country / territory of asylum/residence` == "Pakistan" | `Country / territory of asylum/residence` == "Nepal" | `Country / territory of asylum/residence` == "Maldives" | `Country / territory of asylum/residence` == "India" | `Country / territory of asylum/residence` == "Bhutan" | `Country / territory of asylum/residence` == "Bangladesh")
+
+
+head(Indian.Subcontinent.Resettle)
+
+sum(Indian.Subcontinent.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : NORTH AMERICA}
+##Subsetting by Country of Resettlement : NORTH AMERICA
+
+
+North.America.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "Canada" | `Country / territory of asylum/residence` == "United States of America")
+
+
+head(North.America.Resettle)
+
+sum(North.America.Resettle$Value, na.rm=TRUE)
+```
+
+```{r Subsetting by Country of Resettlement : ASIA}
+##Subsetting by Country of Resettlement : ASIA
+
+
+Asia.Resettle<-subset(resettlement, `Country / territory of asylum/residence` == "China" | `Country / territory of asylum/residence` == "Rep. of Korea" | `Country / territory of asylum/residence` == "Mongolia" | `Country / territory of asylum/residence` == "Japan" | `Country / territory of asylum/residence` == "Dem. People's Rep. of Korea" | `Country / territory of asylum/residence` == "China, Hong Kong SAR")
+
+
+head(Asia.Resettle)
+
+sum(Asia.Resettle$Value, na.rm=TRUE)
+```
